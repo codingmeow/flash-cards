@@ -26,3 +26,8 @@ app.controller('MainController', function ($scope, FlashCardsFactory, ScoreFacto
 	}
 
 });
+
+app.controller('StatsController', function($scope, ScoreFactory) {
+    $scope.scores = ScoreFactory;
+})
+
