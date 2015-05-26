@@ -21,9 +21,9 @@
                 <button class="category-button" ng-click='getCategoryCards(category)'>Reset</button>
                 <loader ng-hide="loading"></loader>
                 <div 
-                    ng-repeat="card in flashCards | orderBy : 'question'"
-                    class="flash-card" ng-class="{{ card.category }}" ng-show='loading'>
-                    <flash-card></flash-card>
+                    ng-repeat="flashCard in flashCards | orderBy : 'question'"
+                    class="flash-card" ng-class="{{ flashCard.category }}" ng-show='loading' border-on-hover>
+                    <flash-card card="flashCard"></flash-card>
                 </div>
             </div> <!-- end main controller -->
         </div> 
@@ -35,5 +35,6 @@
         <script src="/js/factories/FlashCardsFactory.js"></script>
         <script src="/js/directives/loader/loader.js"></script>
         <script src="/js/directives/flash-cards/flash-card.js"></script>
+        <script src="/js/directives/borderOnHover/borderOnHover.js"></script>
     </body>
 </html>

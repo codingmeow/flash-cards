@@ -20,16 +20,16 @@ app.controller('MainController', function ($scope, FlashCardsFactory, ScoreFacto
 	];
 
 	$scope.getCategoryCards = function (category) {
-
+		$scope.loading = false;
 		FlashCardsFactory.getFlashCards(category).then(function (data){
 			$scope.flashCards = data;
 			$scope.currentCategory = category;
+			$scope.loading = true;
+			if (!category){
+				ScoreFactory.correct = 0;
+				ScoreFactory.incorrect = 0;
+			}
 		});
-
 	}
 
 });
-
-app.controller('StatsController', function($scope, ScoreFactory) {
-    $scope.scores = ScoreFactory;
-})
