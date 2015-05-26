@@ -1,11 +1,15 @@
-app.directive('flash-card', function() {
+app.directive('flashCard', function() {
   return {
     restrict: "E",    //'A' is for attribute 'E' is for element
-    template: 'js/directives/flash-card/flash-card.html',
-    link: function(scope, element, attrs, controller) {  //runs on the dom tree when its linked
-      //use element to access the dom node and interact with the
-      // elements events (i.e. .onclick)
+    templateUrl: 'js/directives/flash-cards/flash-card.html',
+    link: function(scope) {
+    	scope.answerQuestion = function (answer, flashCard) {
+				if (!flashCard.answered) {
+					flashCard.answered = true;
+					flashCard.answeredCorrectly = answer.correct;
+					flashCard.answeredCorrectly ? ScoreFactory.correct++ : ScoreFactory.incorrect++;
+				}
+			}
     }
-
-  }; //<-- directive definition
+  };
 });
