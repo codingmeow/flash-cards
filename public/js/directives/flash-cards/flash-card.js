@@ -1,4 +1,4 @@
-app.directive('flashCard', function() {
+app.directive('flashCard', ['ScoreFactory', function (ScoreFactory) {
   return {
     restrict: "E",    //'A' is for attribute 'E' is for element
     templateUrl: 'js/directives/flash-cards/flash-card.html',
@@ -12,4 +12,4 @@ app.directive('flashCard', function() {
 			}
     }
   };
-});
+}]);
