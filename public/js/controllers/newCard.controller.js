@@ -1,4 +1,4 @@
-app.controller('NewCardController', function ($scope, FlashCardsFactory){
+app.controller('NewCardController', function ($rootScope, $scope, FlashCardsFactory){
 	$scope.newCard = {
     question: null,
     category: null,
@@ -19,12 +19,15 @@ app.controller('NewCardController', function ($scope, FlashCardsFactory){
 	$scope.setNewCard = function (newCard){
 
 		FlashCardsFactory.createNewCard(newCard).then(function (response){
-			console.log(response);
+			
+			$rootScope.$broadcast('newCard', response);
+
 			$scope.newCard.question = null;
 			$scope.newCard.category = null;
 			$scope.newCard.answers = [];
+
 		});
 	};
 
-	console.log("test", $scope.flashCards);
+	// console.log("test", $scope.flashCards);
 });

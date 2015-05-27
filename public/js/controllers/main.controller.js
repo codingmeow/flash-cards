@@ -1,4 +1,4 @@
-app.controller('MainController', function ($scope, FlashCardsFactory, ScoreFactory) {
+app.controller('MainController', function ($rootScope, $scope, FlashCardsFactory, ScoreFactory) {
 
 	$scope.loading = false;
 	// console.log("WHILE loading", $scope.loading);
@@ -12,6 +12,9 @@ app.controller('MainController', function ($scope, FlashCardsFactory, ScoreFacto
 
 	});
 
+	$rootScope.$on('newCard', function (event, data){
+		$scope.flashCards.push(data);
+	})
 	// $scope.$watch('', function(){
 
 	// })

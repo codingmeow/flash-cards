@@ -21,6 +21,7 @@ app.factory('FlashCardsFactory', function ($http) {
         createNewCard: function (newCard){
             return $http.post('/cards', newCard).then(function (response){
                 console.log(response.data);
+                return response.data;
             });
         }
 

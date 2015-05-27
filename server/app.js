@@ -55,18 +55,25 @@ app.get('/cards', function (req, res) {
 
 app.post('/cards', function (req, res) {
     console.log(req.body);
-    var FlashCard = new FlashCardModel({
+    var card = req.body
 
-        question: req.body.question,
-        category: req.body.category,
-        answers: req.body.answers
+    FlashCardModel.create(card).then(function(createdCard){
+        res.send(createdCard);
+    }, function (err) {
+        res.status(500);
+    })
+    // var FlashCard = new FlashCardModel({
 
-    });
+    //     question: req.body.question,
+    //     category: req.body.category,
+    //     answers: req.body.answers
 
-    FlashCard.save().then(function (err){
-        if(err) console.log(err);
-        console.log('REDIRECTING!!!');
-        res.redirect('/');
-    });
+    // });
+
+    // FlashCard.save().then(function (err){
+    //     if(err) console.log(err);
+    //     console.log('REDIRECTING!!!');
+    //     res.redirect('/');
+    // });
 
 })

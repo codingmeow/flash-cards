@@ -18,18 +18,6 @@
                 </div>
             </div>
 
-            <div ng-controller="MainController">
-
-                <button class="category-button" ng-repeat="category in categories" ng-click='getCategoryCards(category)' ng-class="{active: category === currentCategory}">{{ category }}</button>
-                <button class="category-button" ng-click='getCategoryCards(category)'>Reset</button>
-                <loader ng-hide="loading"></loader>
-
-                <div 
-                    ng-repeat="flashCard in flashCards | orderBy : 'question'"
-                    class="flash-card" ng-class="{{ flashCard.category }}" ng-show='loading' border-on-hover>
-                    <flash-card card="flashCard"></flash-card>
-                </div>
-
             <div ng-controller="NewCardController">
                 <pre>{{ newCard | json }}</pre>
                 <pre>{{ newCardForm.$valid | json }}</pre>
@@ -38,11 +26,11 @@
                     <form name="newCardForm" ng-submit="newCardForm.$valid && setNewCard(newCard)">
 
                         <div>
-                            <error-message ng-show="newCardForm.question.$error.required && newCardForm.question.$touched">
+                            <error-message ng-show="newCardForm.question.$error.required && newCardForm.question.$dirty">
                                 {{ errorMessages.Q }}
                             </error-message>
                         </div>
-                        
+
                         <div>
                             <error-message ng-show="newCardForm.category.$error.required && newCardForm.category.$touched">
                                 {{ errorMessages.C }}
@@ -110,6 +98,19 @@
                 </div>
 
             </div> 
+
+            <div ng-controller="MainController">
+
+                <button class="category-button" ng-repeat="category in categories" ng-click='getCategoryCards(category)' ng-class="{active: category === currentCategory}">{{ category }}</button>
+                <button class="category-button" ng-click='getCategoryCards(category)'>Reset</button>
+                <loader ng-hide="loading"></loader>
+
+                <div 
+                    ng-repeat="flashCard in flashCards | orderBy : 'question'"
+                    class="flash-card" ng-class="{{ flashCard.category }}" ng-show='loading' border-on-hover>
+                    <flash-card card="flashCard"></flash-card>
+                </div>
+
 
         </div> <!-- end main controller -->
     	<script src="/lib/angular.js"></script>
