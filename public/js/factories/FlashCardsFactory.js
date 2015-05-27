@@ -16,7 +16,14 @@ app.factory('FlashCardsFactory', function ($http) {
                 return response.data;
             });
 
+        },
+
+        createNewCard: function (newCard){
+            return $http.post('/cards', newCard).then(function (response){
+                console.log(response.data);
+            });
         }
+
 
     };
 

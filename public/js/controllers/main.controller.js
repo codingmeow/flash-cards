@@ -12,6 +12,10 @@ app.controller('MainController', function ($scope, FlashCardsFactory, ScoreFacto
 
 	});
 
+	// $scope.$watch('', function(){
+
+	// })
+
 	$scope.categories = [
     'MongoDB',
     'Express',

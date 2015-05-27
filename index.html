@@ -9,6 +9,7 @@
     <body>
 
         <div ng-app="flashCards">
+
             <div ng-controller="StatsController" id="statistics">
 
                 <div id="scoreboard">
@@ -16,25 +17,112 @@
                     <h3>Incorrect: <span>{{ scores.incorrect }}</span></h3>
                 </div>
             </div>
+
             <div ng-controller="MainController">
+
                 <button class="category-button" ng-repeat="category in categories" ng-click='getCategoryCards(category)' ng-class="{active: category === currentCategory}">{{ category }}</button>
                 <button class="category-button" ng-click='getCategoryCards(category)'>Reset</button>
                 <loader ng-hide="loading"></loader>
+
                 <div 
                     ng-repeat="flashCard in flashCards | orderBy : 'question'"
                     class="flash-card" ng-class="{{ flashCard.category }}" ng-show='loading' border-on-hover>
                     <flash-card card="flashCard"></flash-card>
                 </div>
-            </div> <!-- end main controller -->
-        </div> 
+
+            <div ng-controller="NewCardController">
+                <pre>{{ newCard | json }}</pre>
+                <pre>{{ newCardForm.$valid | json }}</pre>
+
+                <div>
+                    <form name="newCardForm" ng-submit="newCardForm.$valid && setNewCard(newCard)">
+
+                        <div>
+                            <error-message ng-show="newCardForm.question.$error.required && newCardForm.question.$touched">
+                                {{ errorMessages.Q }}
+                            </error-message>
+                        </div>
+                        
+                        <div>
+                            <error-message ng-show="newCardForm.category.$error.required && newCardForm.category.$touched">
+                                {{ errorMessages.C }}
+                            </error-message>
+                        </div>
+
+                        <div>
+                            <error-message ng-show="newCardForm.question.$error.minlength && newCardForm.question.$touch">
+                                {{ errorMessages.QS }}
+                            </error-message>
+                        </div>
+
+                        <div>
+
+                            <error-message ng-show="newCardForm.answers[0].$error.maxlength && newCardForm.answers[0].$touch">
+                                {{ errorMessages.AL }}
+                            </error-message>
+
+                            <error-message ng-show="newCardForm.answers[1].$error.maxlength && newCardForm.answers[1].$touch">
+                                {{ errorMessages.AL }}
+                            </error-message>
+
+                            <error-message ng-show="newCardForm.answers[2].$error.maxlength && newCardForm.answers[2].$touch">
+                                {{ errorMessages.AL }}
+                            </error-message>
+                        </div>
+
+
+
+                        <div>
+                            <input type="text" name="question" ng-minlength='15' ng-model='newCard.question' required/>
+                        </div>
+
+                        <div>
+                            <select name='category' ng-model='newCard.category' required>
+                                <option ng-repeat='category in categories' required>{{ category }}</option>
+                            </select>
+                        </div>
+
+                        <!-- <div ng-repeat="answer in newCard.answers">
+                            <input ng-maxlength='40' fix-answer name='answers' ng-model='answer.text'/>
+                            <input type='checkbox' value='true' ng-model='answer.correct'>correct?</input>
+                        </div> -->
+
+                        <div>
+                            <input ng-maxlength='40' name='answers[0]' ng-model='newCard.answers[0].text' required>
+                            <input type='checkbox' value='true' ng-model='newCard.answers[0].correct'>correct?</input>
+                        </div>
+
+                        <div>
+                            <input ng-maxlength='40' name='answers[1]' ng-model='newCard.answers[1].text' required>
+                            <input type='checkbox' value='true' ng-model='newCard.answers[1].correct'>correct?</input>
+                        </div>
+
+                        <div>
+                            <input ng-maxlength='40' name='answers[2]' ng-model='newCard.answers[2].text' required>
+                            <input type='checkbox' value='true' ng-model='newCard.answers[2].correct'>correct?</input>
+                        </div>
+
+                        
+
+                        <button class="newCardSubmit">Submit</button>
+
+                    </form>
+                </div>
+
+            </div> 
+
+        </div> <!-- end main controller -->
     	<script src="/lib/angular.js"></script>
     	<script src="app.js"></script>
         <script src="/js/controllers/main.controller.js"></script>
         <script src="/js/controllers/stats.controller.js"></script>
+        <script src="/js/controllers/newCard.controller.js"></script>
         <script src="/js/factories/ScoreFactory.js"></script>
         <script src="/js/factories/FlashCardsFactory.js"></script>
         <script src="/js/directives/loader/loader.js"></script>
         <script src="/js/directives/flash-cards/flash-card.js"></script>
         <script src="/js/directives/borderOnHover/borderOnHover.js"></script>
+        <script src="/js/directives/errorMessage/errorMessage.js"></script>
+        <script src="/js/directives/answerFix/answerFix.js"></script>
     </body>
 </html>
